@@ -34,123 +34,123 @@ source $HOME/.bash_profile
 
 Synchronization status:
 ```
-evmosd status 2>&1 | jq .SyncInfo
+0gchaind status 2>&1 | jq .SyncInfo
 ```
 
 ### Create wallet
 To create new wallet you can use command below. Don’t forget to save the mnemonic
 ```
-evmosd keys add $WALLET
+0gchaind keys add $WALLET
 ```
 
 Recover your wallet using seed phrase
 ```
-evmosd keys add $WALLET --recover
+0gchaind keys add $WALLET --recover
 ```
 
 To get current list of wallets
 ```
-evmosd keys list
+0gchaind keys list
 ```
 
 ## Usefull commands
 ### Service management
 Check logs
 ```
-journalctl -fu evmosd -o cat
+journalctl -fu 0gchaind -o cat
 ```
 
 Start service
 ```
-sudo systemctl start evmosd
+sudo systemctl start 0gchaind
 ```
 
 Stop service
 ```
-sudo systemctl stop evmosd
+sudo systemctl stop 0gchaind
 ```
 
 Restart service
 ```
-sudo systemctl restart evmosd
+sudo systemctl restart 0gchaind
 ```
 
 ### Node info
 Synchronization info
 ```
-evmosd status 2>&1 | jq .SyncInfo
+0gchaind status 2>&1 | jq .SyncInfo
 ```
 
 Validator info
 ```
-evmosd status 2>&1 | jq .ValidatorInfo
+0gchaind status 2>&1 | jq .ValidatorInfo
 ```
 
 Node info
 ```
-evmosd status 2>&1 | jq .NodeInfo
+0gchaind status 2>&1 | jq .NodeInfo
 ```
 
 Show node id
 ```
-evmosd tendermint show-node-id
+0gchaind tendermint show-node-id
 ```
 
 ### Wallet operations
 List of wallets
 ```
-evmosd keys list
+0gchaind keys list
 ```
 
 Recover wallet
 ```
-evmosd keys add $WALLET --recover
+0gchaind keys add $WALLET --recover
 ```
 
 Delete wallet
 ```
-evmosd keys delete $WALLET
+0gchaind keys delete $WALLET
 ```
 
 Get wallet balance
 ```
-evmosd query bank balances $OG_WALLET_ADDRESS
+0gchaind query bank balances $OG_WALLET_ADDRESS
 ```
 
 Transfer funds
 ```
-evmosd tx bank send $OG_WALLET_ADDRESS <TO_OG_WALLET_ADDRESS> 10000000aevmos
+0gchaind tx bank send $OG_WALLET_ADDRESS <TO_OG_WALLET_ADDRESS> 10000000ua0gi
 ```
 
 ### Voting
 ```
-evmosd tx gov vote 1 yes --from $WALLET --chain-id=$OG_CHAIN_ID
+0gchaind tx gov vote 1 yes --from $WALLET --chain-id=$OG_CHAIN_ID
 ```
 
 ### Staking, Delegation and Rewards
 Delegate stake
 ```
-evmosd tx staking delegate $OG_VALOPER_ADDRESS 10000000aevmos --from=$WALLET --chain-id=$OG_CHAIN_ID --gas=auto
+0gchaind tx staking delegate $OG_VALOPER_ADDRESS 10000000ua0gi --from=$WALLET --chain-id=$OG_CHAIN_ID --gas=auto
 ```
 
 Redelegate stake from validator to another validator
 ```
-evmosd tx staking redelegate <srcValidatorAddress> <destValidatorAddress> 10000000aevmos --from=$WALLET --chain-id=$OG_CHAIN_ID --gas=auto
+0gchaind tx staking redelegate <srcValidatorAddress> <destValidatorAddress> 10000000ua0gi --from=$WALLET --chain-id=$OG_CHAIN_ID --gas=auto
 ```
 
 Withdraw all rewards
 ```
-evmosd tx distribution withdraw-all-rewards --from=$WALLET --chain-id=$OG_CHAIN_ID --gas=auto
+0gchaind tx distribution withdraw-all-rewards --from=$WALLET --chain-id=$OG_CHAIN_ID --gas=auto
 ```
 
 Withdraw rewards with commision
 ```
-evmosd tx distribution withdraw-rewards $OG_VALOPER_ADDRESS --from=$WALLET --commission --chain-id=$evmos_CHAIN_ID
+0gchaind tx distribution withdraw-rewards $OG_VALOPER_ADDRESS --from=$WALLET --commission --chain-id=$evmos_CHAIN_ID
 ```
 
 Unjail validator
 ```
-evmosd tx slashing unjail \
+0gchaind tx slashing unjail \
   --broadcast-mode=block \
   --from=$WALLET \
   --chain-id=$OG_CHAIN_ID \
