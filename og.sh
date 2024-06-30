@@ -41,7 +41,7 @@ fi
 if [ ! $WALLET ]; then
 	echo "export WALLET=wallet" >> $HOME/.bash_profile
 fi
-echo "export OG_CHAIN_ID=zgtendermint_16600-1" >> $HOME/.bash_profile
+echo "export OG_CHAIN_ID=zgtendermint_16600-2" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 # update
@@ -51,25 +51,20 @@ sudo apt update && sudo apt upgrade -y
 apt install curl iptables build-essential git wget jq make gcc nano tmux htop nvme-cli pkg-config libssl-dev libleveldb-dev tar clang bsdmainutils ncdu unzip libleveldb-dev -y
 
 # install go
-if ! [ -x "$(command -v go)" ]; then
-ver="1.21.3" && \
-wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
-sudo rm -rf /usr/local/go && \
-sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
-rm "go$ver.linux-amd64.tar.gz" && \
-echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> $HOME/.bash_profile && \
-source $HOME/.bash_profile
-fi
+sudo rm -rf /usr/local/go
+curl -L https://go.dev/dl/go1.21.6.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile
+source .bash_profile
 
 # download binary
 cd && rm -rf 0g-chain
 git clone https://github.com/0glabs/0g-chain
 cd 0g-chain
-git checkout v0.1.0
+git checkout v0.2.3
 make install
 
 # config
-0gchaind config chain-id zgtendermint_16600-1
+0gchaind config chain-id zgtendermint_16600-2
 0gchaind config keyring-backend test
 
 # init
@@ -83,8 +78,8 @@ curl -L https://snapshots-testnet.nodejumper.io/0g-testnet/addrbook.json > $HOME
 sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0.0025ua0gi\"|" $HOME/.0gchain/config/app.toml
 
 # set peers and seeds
-SEEDS="c4d619f6088cb0b24b4ab43a0510bf9251ab5d7f@54.241.167.190:26656,44d11d4ba92a01b520923f51632d2450984d5886@54.176.175.48:26656,f2693dd86766b5bf8fd6ab87e2e970d564d20aff@54.193.250.204:26656"
-PEERS="b44ff9e9eb4792bc233147dbe43f1709ad77ce43@80.65.211.223:26656,255360200854a97c65d8c1f2d7154c5dd5e54eb5@65.108.68.214:14256,feb0cc40a3009a16a62bb843c000974565107c4c@128.140.65.68:26656,b2dcd3248fc4104b37568d98495466b4a2074672@65.109.145.247:1020,d10481fc8b787deea4cb789b5aecf16ec81ab076@62.169.26.91:26656,40fe6ab4133d5047b53598af69dc06482f702508@156.67.29.91:26656,258861e4032177e6f0328aa7e2e38b0298510d6c@84.247.188.240:26656,f3c912cf5653e51ee94aaad0589a3d176d31a19d@157.90.0.102:31656,535ddcc917ab5ee6ddd2259875dac6018651da24@176.9.183.45:32656,82791110b18222f5ce1f43792ba1d22e65a706fe@217.28.221.162:26656,6b72d01e9d09d00beac1a004281cfc10833019fe@38.242.138.151:26656,59fe20be127ea2431fcf004af16f101a62269b93@38.242.144.121:26656,cb7b2a0d3de3b6c2d94cdee588176182911cd701@62.169.25.134:26656,e8cd3d7547bdc90cdb275416cce786eefcc754a4@80.71.227.137:26656,0a0b54852a271923277b03366a1f0a1dacbcd464@109.199.102.47:26656,38ae510d30cb048caf99cf87108ec21317a4063f@82.67.49.126:26656,710f94642675d82190d43d272a77dfeb1daaf940@5.9.61.237:19656,9a6a47bd79b3a1bdb27b8df0e6f2218968d56f67@158.220.88.106:26656,645531eb02b275a59cc3b1af99e541852849f695@84.247.139.25:16656,a25dadd5cb8feb5ad88ea39ededce5e81f90c87b@5.75.253.119:26656"
+SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de28667725a4fef26cdc7f9452cc34b16d@54.176.175.48:26656,e9b4bc203197b62cc7e6a80a64742e752f4210d5@54.193.250.204:26656,68b9145889e7576b652ca68d985826abd46ad660@18.166.164.232:26656"
+PEERS="b3411cfb89113055dce89277c7cc7029ce451090@195.201.242.107:26656,ed87b92b175a6e42f2688efb4f6070bb57a4914f@89.117.63.18:12656,35e76dcea85061feaef024ede1e1dd8661332238@62.171.132.194:12656,057f64f293f0843c849aa3f1f1e20a1a0add29f8@45.159.222.237:26656,85233db31304a69fb2dda924b5de31c22dfcff5a@45.10.161.188:26656,89e272c0e5007e391f420e4f45e1473f91995025@154.26.155.239:26656,96d615925aee68b90bfaf18d461e799fdcb22211@45.10.162.96:26656,b2ea93761696d4881e87f032a7f6158c6c25d92c@45.14.194.241:26646,cfd099ade96d82908b4ab185eddbf90379579bfc@84.247.149.9:26656,bc8898c416f7b22e56782eb16803150fd90863b6@81.0.221.180:26656,0aa16751b6c1884e755997d08dc17f8582aa9e38@45.10.163.80:26656,364c45b7cab8a095cb59443f3e91fd102ec9eb95@158.220.118.216:26656,7ecfe8d9404a4e1ea36cba5d546650da2b97bfd2@45.90.122.129:26656,c8807bba12fa67676319df8e049ae5fac690cf55@45.159.228.20:26656,d7ca6521ee30f8cf9eaf32e9edee1101e44c48e9@45.10.161.5:26656,369666051d45ed28379db34a80dfdf13e43d3681@5.104.80.63:26656,03619b6f90fab32cd5f0cadbe3021e6a3cda16e3@154.26.156.101:26656,6e3c5aaab9d3ac6c0de9fd90648cdced499086bf@65.109.58.118:12656,3acd788260951058a8013ea8bdcc1119cfacfdf3@144.91.116.21:12656,443a1a6f2859be27b4699ffcb31c62ab69af4ba2@155.133.27.209:12656"
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.0gchain/config/config.toml
 
 # disable indexing
@@ -151,7 +146,7 @@ break
 --amount=1000000ua0gi \
 --pubkey=$(0gchaind tendermint show-validator) \
 --moniker=$NODENAME \
---chain-id=zgtendermint_16600-1 \
+--chain-id=zgtendermint_16600-2 \
 --commission-rate=0.10 \
 --commission-max-rate=0.20 \
 --commission-max-change-rate=0.01 \
