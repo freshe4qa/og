@@ -2,7 +2,7 @@
   <img height="100" height="auto" src="https://github.com/freshe4qa/og/assets/85982863/64481bdc-a74e-4f04-b07a-e99a72eb3861">
 </p>
 
-# Og Testnet — zgtendermint_16600-1
+# Og Testnet — zgtendermint_16600-2
 
 Official documentation:
 >- [Validator setup instructions](https://docs.0g.ai/0g-doc)
