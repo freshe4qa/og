@@ -58,9 +58,8 @@ source .bash_profile
 
 # download binary
 cd && rm -rf 0g-chain
-git clone https://github.com/0glabs/0g-chain
+git clone -b v0.3.0 https://github.com/0glabs/0g-chain.git
 cd 0g-chain
-git checkout v0.2.3
 make install
 
 # config
